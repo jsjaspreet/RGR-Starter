@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:server": "webpack --config config/webpack/server.js",
+    "build:client": "webpack --config config/webpack/client.js",
+    "dev:client": "webpack-dev-server --config config/webpack/client.js",
     "build:server-prod": "cross-env NODE_ENV=production webpack -p --config config/webpack/server.js",
     "build:prod": "npm run clean && npm run build:server-prod",
     "build": "npm run clean && npm run build:server",
@@ -47,16 +49,18 @@
     "react": "^15.5.4",
     "react-apollo": "^1.2.0",
     "react-dom": "^15.5.4",
+    "react-hot-loader": "next",
     "react-router-dom": "^4.1.1"
   },
   "babel": {
     "presets": [
       "env",
-      "es2015",
+      ["es2015", {"modules": false}],
       "react",
       "stage-1"
     ],
     "plugins": [
+      "react-hot-loader/babel",
       "transform-class-properties",
       "syntax-dynamic-import",
       "transform-decorators-legacy"
