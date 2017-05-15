@@ -13,5 +13,13 @@ module.exports = {
     filename: outputTarget.base,
     path: outputTarget.dir
   },
-  devtool: 'cheap-module-inline-source-map'
+  devtool: 'cheap-module-inline-source-map',
+  module: {
+    rules: [
+      {
+        use: 'babel-loader',
+        test: /\.js$/
+      }
+    ]
+  }
 }
