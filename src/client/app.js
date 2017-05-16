@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { gql, graphql } from 'react-apollo'
 
-const App = () => (
-  <div>
-    <h2>Hello New World!</h2>
-  </div>
-)
+class App extends Component {
+  render() {
+    console.log(this.props)
+    return (
+      <div>
+        <h1>Hello World!!</h1>
+      </div>
+    )
+  }
+}
 
-export default App
+const query = gql`query { name }`
+
+export default graphql(query)(App)

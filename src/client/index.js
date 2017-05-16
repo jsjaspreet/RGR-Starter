@@ -2,12 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import App from './app'
+import { ApolloClient, ApolloProvider } from 'react-apollo'
+
+const client = new ApolloClient()
 
 const render = (Component) => {
   ReactDOM.render(
-    <AppContainer>
-      <Component/>
-    </AppContainer>,
+    <ApolloProvider client={client}>
+      <AppContainer>
+        <Component/>
+      </AppContainer>
+    </ApolloProvider>,
     document.getElementById('app')
   )
 }

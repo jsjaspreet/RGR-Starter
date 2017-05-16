@@ -59,7 +59,7 @@ module.exports = {
   output: {
     path: outputTarget.dir,
     filename: '[hash].[id].[name].js',
-    publicPath: process.env.NODE_ENV === 'production' ? '/build/' : '/'
+    publicPath: '/build/'
   },
   plugins: plugins,
   devtool: devtool,
@@ -67,7 +67,7 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     contentBase: outputTarget.dir,
-    publicPath: '/'
+    publicPath: '/build/'
   },
   module: {
     rules: [
