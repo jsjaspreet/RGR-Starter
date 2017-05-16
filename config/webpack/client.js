@@ -58,7 +58,7 @@ module.exports = {
   },
   output: {
     path: outputTarget.dir,
-    filename: process.env.NODE_ENV === 'production' ? '[chunkhash].[id].[name].js' : '[hash].[id].[name].js',
+    filename: '[hash].[id].[name].js',
     publicPath: process.env.NODE_ENV === 'production' ? '/build/' : '/'
   },
   plugins: plugins,
