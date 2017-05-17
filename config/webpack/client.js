@@ -29,8 +29,9 @@ let plugins = [
 
 let devtool = ''
 let entry = ['babel-polyfill']
+const production = process.env.NODE_ENV === 'production'
 
-if (process.env.NODE_ENV === 'production') {
+if (production) {
   plugins = [...plugins,
              new webpack.DefinePlugin({
                'process.env': {
@@ -59,7 +60,7 @@ module.exports = {
   output: {
     path: outputTarget.dir,
     filename: '[hash].[id].[name].js',
-    publicPath: '/build/'
+    publicPath: production ? '/build/' : '/'
   },
   plugins: plugins,
   devtool: devtool,
@@ -67,7 +68,12 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     contentBase: outputTarget.dir,
-    publicPath: '/build/'
+    publicPath: '/',
+    proxy: {
+      // Proxy backend requests
+      "/graphql": "http://localhost:8000",
+      "/api": "http://localhost:8000"
+    }
   },
   module: {
     rules: [

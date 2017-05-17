@@ -8,11 +8,14 @@
     "build:server": "webpack --config config/webpack/server.js",
     "build:client": "webpack --config config/webpack/client.js",
     "build:client-prod": "cross-env NODE_ENV=production webpack -p --config config/webpack/client.js",
-    "dev:client": "webpack-dev-server --config config/webpack/client.js",
     "build:server-prod": "cross-env NODE_ENV=production webpack -p --config config/webpack/server.js",
     "build:prod": "npm run clean && npm run build:server-prod && npm run build:client-prod",
     "build": "npm run clean && npm run build:server && npm run build:client",
-    "clean": "rimraf build"
+    "clean": "rimraf build",
+    "dev:client": "webpack-dev-server --config config/webpack/client.js",
+    "dev:server": "nodemon --watch src/server --exec \"npm run start:server\"",
+    "start": "node build/server.js",
+    "start:server": "cross-env babel-node src/server/index.js"
   },
   "keywords": [],
   "author": "",
