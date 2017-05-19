@@ -13,6 +13,7 @@
     "build": "npm run clean && npm run build:server && npm run build:client",
     "clean": "rimraf build",
     "dev:client": "webpack-dev-server --config config/webpack/client.js",
+    "dev": "npm run clean && npm run build:server && npm run dev:server & npm run dev:client",
     "dev:server": "nodemon --watch src/server --exec \"npm run start:server\"",
     "start": "node build/server.js",
     "start:server": "cross-env babel-node src/server/index.js"
