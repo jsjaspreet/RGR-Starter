@@ -9,7 +9,7 @@ var projectPaths = require('../projectPaths')
 var outputTarget = path.parse(projectPaths.clientBuild)
 
 const vendor_libs = [
-  'react', 'react-apollo', 'babel-polyfill', 'react-dom', 'react-router-dom'
+  'react', 'babel-polyfill', 'react-dom', 'react-router-dom'
 ]
 
 // Set up plugins that will be run in dev and prod environments

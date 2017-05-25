@@ -54,7 +54,6 @@
     "pg": "^6.1.5",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
-    "react-apollo": "^1.2.0",
     "react-dom": "^15.5.4",
     "react-hot-loader": "next",
     "react-router-dom": "^4.1.1"
