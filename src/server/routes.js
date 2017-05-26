@@ -1,6 +1,13 @@
 import express from 'express'
 import graphqlHTTP from 'express-graphql'
 import Schema from './schema'
+import util from './util'
+import pg from 'pg'
+import pgConfigByEnv from '../../config/database/pg'
+
+const nodeEnv = util.nodeEnv
+
+const pgPool = new pg.Pool(pgConfigByEnv[nodeEnv])
 
 const router = express.Router()
 
@@ -14,7 +21,8 @@ router.use('/graphql', graphqlHTTP({
 }))
 router.use('/graphiql', graphqlHTTP({
   schema: Schema,
-  graphiql: true
+  graphiql: true,
+  context: { pgPool }
 }))
 
 export default router

@@ -1,15 +1,20 @@
 import {
   GraphQLObjectType,
-  GraphQLNonNull,
-  GraphQLString,
+  GraphQLList,
 } from 'graphql'
+import joinMonster from 'join-monster'
+import { Proposal }from './types'
 
 const rootQuery = new GraphQLObjectType({
   name: 'ProjectAPI',
   fields: () => ({
-    name: {
-      type: new GraphQLNonNull(GraphQLString),
-      resolve: () => "Project GraphQL API"
+    proposals: {
+      type: new GraphQLList(Proposal),
+      resolve: (obj, args, { pgPool }, resolveInfo) => {
+        return joinMonster(resolveInfo, {}, sql => {
+          return pgPool.query(sql)
+        })
+      }
     }
   })
 })
