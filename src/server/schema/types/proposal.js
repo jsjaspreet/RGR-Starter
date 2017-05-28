@@ -7,6 +7,7 @@ import {
   GraphQLID
 } from 'graphql'
 import Reaction from './reaction'
+import Decision from './decision'
 
 const Proposal = new GraphQLObjectType({
   name: 'Proposal',
@@ -30,6 +31,12 @@ const Proposal = new GraphQLObjectType({
     },
     active: {
       type: new GraphQLNonNull(GraphQLBoolean)
+    },
+    decision: {
+      type: Decision,
+      sqlJoin(proposalTable, decisionTable) {
+        return `${proposalTable}.proposal_id = ${decisionTable}.proposal_id`
+      }
     },
     reactions: {
       type: new GraphQLList(Reaction),
