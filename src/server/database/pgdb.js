@@ -31,7 +31,7 @@ export default pgPool => {
         returning *
       `, [userId, proposalId, decision, approve]).then(res => {
         const entry = humps.camelizeKeys(res.rows[0])
-        entry.id = entry.decision_id
+        entry.id = entry.decisionId
         return entry
       })
     }
