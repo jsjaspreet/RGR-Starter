@@ -1,12 +1,16 @@
 import { GraphQLObjectType } from 'graphql'
 import {
-  AddProposalMutation
+  AddProposalMutation,
+  AddDecisionMutation,
+  AddReactionMutation
 } from './mutations'
 
 const RootMutation = new GraphQLObjectType({
   name: 'Mutations',
   fields: () => ({
-    AddProposal: AddProposalMutation
+    AddProposal: AddProposalMutation,
+    AddReaction: AddReactionMutation,
+    AddDecision: AddDecisionMutation
   })
 })
 
