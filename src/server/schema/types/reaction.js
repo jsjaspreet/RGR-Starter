@@ -9,11 +9,10 @@ import {
 const Reaction = new GraphQLObjectType({
   name: 'Reaction',
   sqlTable: 'reactions',
-  uniqueKey: 'reaction_id',
+  uniqueKey: 'id',
   fields: () => ({
     id: {
-      type: GraphQLID,
-      sqlColumn: 'reaction_id'
+      type: GraphQLID
     },
     approve: {
       type: new GraphQLNonNull(GraphQLBoolean)

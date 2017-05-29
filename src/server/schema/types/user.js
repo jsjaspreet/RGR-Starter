@@ -8,11 +8,10 @@ import {
 const User = new GraphQLObjectType({
   name: 'User',
   sqlTable: 'users',
-  uniqueKey: 'user_id',
+  uniqueKey: 'id',
   fields: () => ({
     id: {
-      type: GraphQLID,
-      sqlColumn: 'user_id'
+      type: GraphQLID
     },
     email: {
       type: new GraphQLNonNull(GraphQLString)

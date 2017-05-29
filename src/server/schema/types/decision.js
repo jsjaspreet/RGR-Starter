@@ -8,11 +8,10 @@ import {
 const Decision = new GraphQLObjectType({
   name: 'Decision',
   sqlTable: 'decisions',
-  uniqueKey: 'decision_id',
+  uniqueKey: 'id',
   fields: () => ({
     id: {
-      type: GraphQLID,
-      sqlColumn: 'decision_id'
+      type: GraphQLID
     },
     userId: {
       type: GraphQLID,

@@ -8,9 +8,7 @@ export default pgPool => {
         values($1, $2, true)
         returning *
       `, [proposal, userId]).then(res => {
-        const entry = humps.camelizeKeys(res.rows[0])
-        entry.id = entry.proposalId
-        return entry
+        return humps.camelizeKeys(res.rows[0])
       })
     },
     addReaction({ approve, comment, userId, proposalId }) {
@@ -19,10 +17,9 @@ export default pgPool => {
         values($1, $2, $3, $4) 
         returning *
       `, [approve, comment, userId, proposalId]).then(res => {
-        const entry = humps.camelizeKeys(res.rows[0])
-        entry.id = entry.reactionId
-        return entry
-      })
+          return humps.camelizeKeys(res.rows[0])
+        }
+      )
     },
     addDecision({ userId, proposalId, decision, approve }) {
       return pgPool.query(`
@@ -30,9 +27,16 @@ export default pgPool => {
         values($1, $2, $3, $4) 
         returning *
       `, [userId, proposalId, decision, approve]).then(res => {
-        const entry = humps.camelizeKeys(res.rows[0])
-        entry.id = entry.decisionId
-        return entry
+        return humps.camelizeKeys(res.rows[0])
+      })
+    },
+    addUser({ email, username, password }) {
+      return pgPool.query(`
+        insert into users(email, username, password)
+        values($1, $2, $3)
+        returning id, email, username 
+      `, [email, username, password]).then(res => {
+        return humps.camelizeKeys(res.rows[0])
       })
     }
   }

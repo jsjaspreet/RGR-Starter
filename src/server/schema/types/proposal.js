@@ -12,11 +12,10 @@ import Decision from './decision'
 const Proposal = new GraphQLObjectType({
   name: 'Proposal',
   sqlTable: 'proposals',
-  uniqueKey: 'proposal_id',
+  uniqueKey: 'id',
   fields: () => ({
     id: {
-      type: GraphQLID,
-      sqlColumn: 'proposal_id'
+      type: GraphQLID
     },
     proposal: {
       type: new GraphQLNonNull(GraphQLString)
@@ -35,13 +34,13 @@ const Proposal = new GraphQLObjectType({
     decision: {
       type: Decision,
       sqlJoin(proposalTable, decisionTable) {
-        return `${proposalTable}.proposal_id = ${decisionTable}.proposal_id`
+        return `${proposalTable}.id = ${decisionTable}.proposal_id`
       }
     },
     reactions: {
       type: new GraphQLList(Reaction),
       sqlJoin(proposalTable, reactionTable) {
-        return `${proposalTable}.proposal_id = ${reactionTable}.proposal_id`
+        return `${proposalTable}.id = ${reactionTable}.proposal_id`
       }
     }
   })
