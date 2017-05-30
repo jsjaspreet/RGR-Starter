@@ -25,7 +25,11 @@ const UserMutation = {
     const { email, username, password } = input
     // hash the password before saving
     const hash = await bcrypt.hash(password, 10)
-    return pgdb(pgPool).addUser({ email, username, password: hash })
+    return pgdb(pgPool).addUser({
+      username,
+      email: email.toLowerCase(),
+      password: hash
+    })
   }
 }
 

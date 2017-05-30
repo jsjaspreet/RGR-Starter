@@ -38,6 +38,30 @@ export default pgPool => {
       `, [email, username, password]).then(res => {
         return humps.camelizeKeys(res.rows[0])
       })
+    },
+    getUserByUsername({ username }) {
+      return pgPool.query(`
+        select * 
+        from users 
+        where username=$1
+      `, [username]).then(res => {
+        if (res.rows.length < 1) {
+          return null
+        }
+        return humps.camelizeKeys(res.rows[0])
+      })
+    },
+    getUserById({ id }) {
+      return pgPool.query(`
+        select id, email, username 
+        from users 
+        where id=$1
+      `, [id]).then(res => {
+        if (res.rows.length < 1) {
+          return null
+        }
+        return humps.camelizeKeys(res.rows[0])
+      })
     }
   }
 }
