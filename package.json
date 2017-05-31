@@ -55,13 +55,15 @@
     "js-cookie": "^2.1.4",
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
+    "material-ui": "^0.18.1",
     "moment": "^2.18.1",
     "pg": "^6.2.3",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-hot-loader": "next",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1"
   },
   "babel": {
     "presets": [
