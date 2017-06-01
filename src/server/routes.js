@@ -18,6 +18,7 @@ router.get('/api/status', (req, res) => res.status(200).json({ alive: true }))
 // graphql endpoints
 router.use('/graphql', graphqlHTTP({
   schema: Schema,
+  context: { pgPool }
 }))
 router.use('/graphiql', graphqlHTTP({
   schema: Schema,

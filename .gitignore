@@ -2,3 +2,6 @@
 build
 node_modules
 npm-debug.log
+__generated__
+schema.graphql
+schema.json
