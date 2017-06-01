@@ -72,7 +72,8 @@ module.exports = {
     proxy: {
       // Proxy backend requests
       "/graphql": "http://localhost:8000",
-      "/api": "http://localhost:8000"
+      "/api": "http://localhost:8000",
+      "/assets": "http://localhost:8000"
     }
   },
   module: {
