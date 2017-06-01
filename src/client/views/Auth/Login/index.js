@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
+import styles from './styles'
 import PropTypes from 'prop-types'
 
 class Login extends Component {
@@ -12,12 +13,14 @@ class Login extends Component {
 
   render() {
     return (
-      <Paper zDepth={2}>
-        <div>
-          <TextField/>
-          <TextField/>
-        </div>
-      </Paper>
+      <div style={styles.container}>
+        <Paper zDepth={2}>
+          <div style={styles.textFields}>
+            <TextField id="username"/>
+            <TextField id="pw"/>
+          </div>
+        </Paper>
+      </div>
     )
 
   }

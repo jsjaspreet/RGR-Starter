@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
+import styles from './styles'
 import Login from './Login'
 
 class Auth extends Component {
   render() {
-    return <Login/>
+    return (
+      <div style={styles.container}>
+        <Login/>
+      </div>
+    )
   }
 
 }
