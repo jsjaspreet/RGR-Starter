@@ -3,7 +3,8 @@ import {
   AddProposalMutation,
   AddDecisionMutation,
   AddUserMutation,
-  AddReactionMutation
+  AddReactionMutation,
+  LoginMutation
 } from './mutations'
 
 const RootMutation = new GraphQLObjectType({
@@ -12,6 +13,7 @@ const RootMutation = new GraphQLObjectType({
     AddProposal: AddProposalMutation,
     AddReaction: AddReactionMutation,
     AddDecision: AddDecisionMutation,
+    Login: LoginMutation,
     AddUser: AddUserMutation
   })
 })

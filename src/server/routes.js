@@ -1,11 +1,11 @@
 import express from 'express'
 import graphqlHTTP from 'express-graphql'
 import Schema from './schema'
-import util from './util'
+import config from './config'
 import pg from 'pg'
 import pgConfigByEnv from '../../config/database/pg'
 
-const nodeEnv = util.nodeEnv
+const nodeEnv = config.NODE_ENV
 
 const pgPool = new pg.Pool(pgConfigByEnv[nodeEnv])
 

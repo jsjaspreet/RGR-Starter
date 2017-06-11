@@ -5,7 +5,7 @@ import jwtForUser from './jwtForUser'
 const BAD_CREDS = 'Incorrect email and/or Password'
 
 async function authenticateUser({ username, password, pgPool }) {
-  if (!email || !password) {
+  if (!username || !password) {
     throw new Error(BAD_CREDS)
   }
 
@@ -28,3 +28,5 @@ async function authenticateUser({ username, password, pgPool }) {
     token: jwtForUser(user)
   }
 }
+
+export default authenticateUser
