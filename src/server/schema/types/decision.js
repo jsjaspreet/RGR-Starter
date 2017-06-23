@@ -4,6 +4,8 @@ import {
   GraphQLString,
   GraphQLID
 } from 'graphql'
+import { nodeInterface } from '../definitions'
+import { globalIdField } from 'graphql-relay'
 
 const Decision = new GraphQLObjectType({
   name: 'Decision',
@@ -11,7 +13,9 @@ const Decision = new GraphQLObjectType({
   uniqueKey: 'id',
   fields: () => ({
     id: {
-      type: GraphQLID
+      description: 'The global ID for the Relay spec',
+      ...globalIdField(),
+      sqlDeps: ['id']
     },
     userId: {
       type: GraphQLID,
@@ -31,7 +35,8 @@ const Decision = new GraphQLObjectType({
     approve: {
       type: new GraphQLNonNull(GraphQLString),
     }
-  })
+  }),
+  interfaces: () => [nodeInterface]
 })
 
 export default Decision

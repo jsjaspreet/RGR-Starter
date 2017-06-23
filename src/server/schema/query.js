@@ -5,6 +5,7 @@ import {
 } from 'graphql'
 import { joinMonsterResolver } from './util'
 import { UserType, ProposalType }from './types'
+import { nodeField } from './definitions'
 
 const rootQuery = new GraphQLObjectType({
   name: 'ProjectAPI',
@@ -15,6 +16,7 @@ const rootQuery = new GraphQLObjectType({
       type: new GraphQLNonNull(rootQuery),
       resolve: () => ({})
     },
+    node: nodeField,
     users: {
       type: new GraphQLList(UserType),
       resolve: joinMonsterResolver

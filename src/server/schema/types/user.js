@@ -2,8 +2,9 @@ import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLString,
-  GraphQLID
 } from 'graphql'
+import { nodeInterface } from '../definitions'
+import { globalIdField } from 'graphql-relay'
 
 const User = new GraphQLObjectType({
   name: 'User',
@@ -11,7 +12,9 @@ const User = new GraphQLObjectType({
   uniqueKey: 'id',
   fields: () => ({
     id: {
-      type: GraphQLID
+      description: 'The global ID for the Relay spec',
+      ...globalIdField(),
+      sqlDeps: ['id']
     },
     email: {
       type: new GraphQLNonNull(GraphQLString)
@@ -19,7 +22,8 @@ const User = new GraphQLObjectType({
     username: {
       type: new GraphQLNonNull(GraphQLString)
     }
-  })
+  }),
+  interfaces: () => [nodeInterface]
 })
 
 export default User

@@ -5,6 +5,8 @@ import {
   GraphQLBoolean,
   GraphQLID
 } from 'graphql'
+import { nodeInterface } from '../definitions'
+import { globalIdField } from 'graphql-relay'
 
 const Reaction = new GraphQLObjectType({
   name: 'Reaction',
@@ -12,7 +14,9 @@ const Reaction = new GraphQLObjectType({
   uniqueKey: 'id',
   fields: () => ({
     id: {
-      type: GraphQLID
+      description: 'The global ID for the Relay spec',
+      ...globalIdField(),
+      sqlDeps: ['id']
     },
     approve: {
       type: new GraphQLNonNull(GraphQLBoolean)
@@ -32,8 +36,8 @@ const Reaction = new GraphQLObjectType({
       type: GraphQLID,
       sqlColumn: 'proposal_id'
     }
-  })
-
+  }),
+  interfaces: () => [nodeInterface]
 })
 
 export default Reaction

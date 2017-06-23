@@ -6,6 +6,8 @@ import {
   GraphQLBoolean,
   GraphQLID
 } from 'graphql'
+import { nodeInterface } from '../definitions'
+import { globalIdField } from 'graphql-relay'
 import Reaction from './reaction'
 import Decision from './decision'
 
@@ -15,7 +17,9 @@ const Proposal = new GraphQLObjectType({
   uniqueKey: 'id',
   fields: () => ({
     id: {
-      type: GraphQLID
+      description: 'The global ID for the Relay spec',
+      ...globalIdField(),
+      sqlDeps: ['id']
     },
     proposal: {
       type: new GraphQLNonNull(GraphQLString)
@@ -43,7 +47,8 @@ const Proposal = new GraphQLObjectType({
         return `${proposalTable}.id = ${reactionTable}.proposal_id`
       }
     }
-  })
+  }),
+  interfaces: () => [nodeInterface]
 })
 
 export default Proposal
