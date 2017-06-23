@@ -1,33 +1,30 @@
 import {
-  GraphQLInputObjectType,
   GraphQLString,
   GraphQLID,
   GraphQLNonNull
 } from 'graphql'
-import { Proposal } from '../types'
+import { mutationWithClientMutationId } from 'graphql-relay'
+import { ProposalType } from '../types'
 import pgdb from '../../database/pgdb'
 
-const ProposalInput = new GraphQLInputObjectType({
-  name: 'ProposalInput',
-  fields: {
+const createProposalMutation = mutationWithClientMutationId({
+  name: 'CreateProposal',
+  inputFields: {
     proposal: {
       type: new GraphQLNonNull(GraphQLString)
     },
     userId: {
       type: new GraphQLNonNull(GraphQLID)
     }
+  },
+  outputFields: {
+    proposal: {
+      type: ProposalType
+    }
+  },
+  mutateAndGetPayload: ({ proposal, userId }, { pgPool }) => {
+    return { proposal: pgdb(pgPool).addProposal({ proposal, userId }) }
   }
 })
 
-const ProposalMutation = {
-  type: Proposal,
-  args: {
-    input: { type: new GraphQLNonNull(ProposalInput) }
-  },
-  resolve: (obj, { input }, { pgPool }) => {
-    const { proposal, userId } = input
-    return pgdb(pgPool).addProposal({ proposal, userId })
-  }
-}
-
-export default ProposalMutation
+export default createProposalMutation

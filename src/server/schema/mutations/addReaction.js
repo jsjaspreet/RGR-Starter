@@ -1,16 +1,16 @@
 import {
-  GraphQLInputObjectType,
   GraphQLString,
   GraphQLBoolean,
   GraphQLID,
   GraphQLNonNull
 } from 'graphql'
-import { Reaction } from '../types'
+import { mutationWithClientMutationId } from 'graphql-relay'
+import { ReactionType } from '../types'
 import pgdb from '../../database/pgdb'
 
-const ReactionInput = new GraphQLInputObjectType({
-  name: 'ReactionInput',
-  fields: {
+const createReactionMutation = mutationWithClientMutationId({
+  name: 'CreateReaction',
+  inputFields: {
     approve: {
       type: new GraphQLNonNull(GraphQLBoolean)
     },
@@ -23,18 +23,15 @@ const ReactionInput = new GraphQLInputObjectType({
     proposalId: {
       type: new GraphQLNonNull(GraphQLID)
     }
+  },
+  outputFields: {
+    reaction: {
+      type: ReactionType
+    }
+  },
+  mutateAndGetPayload: ({ approve, comment, userId, proposalId }, { pgPool }) => {
+    return { reaction: pgdb(pgPool).addReaction({ approve, comment, userId, proposalId }) }
   }
 })
 
-const ReactionMutation = {
-  type: Reaction,
-  args: {
-    input: { type: new GraphQLNonNull(ReactionInput) }
-  },
-  resolve: (obj, { input }, { pgPool }) => {
-    const { approve, comment, userId, proposalId } = input
-    return pgdb(pgPool).addReaction({ approve, comment, userId, proposalId })
-  }
-}
-
-export default ReactionMutation
+export default createReactionMutation

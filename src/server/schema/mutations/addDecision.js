@@ -1,16 +1,16 @@
 import {
-  GraphQLInputObjectType,
   GraphQLString,
   GraphQLBoolean,
   GraphQLID,
   GraphQLNonNull
 } from 'graphql'
-import { Decision } from '../types'
+import { mutationWithClientMutationId } from 'graphql-relay'
+import { DecisionType } from '../types'
 import pgdb from '../../database/pgdb'
 
-const DecisionInput = new GraphQLInputObjectType({
-  name: 'DecisionInput',
-  fields: {
+const createDecisionMutation = mutationWithClientMutationId({
+  name: 'CreateDecision',
+  inputFields: {
     approve: {
       type: new GraphQLNonNull(GraphQLBoolean)
     },
@@ -23,18 +23,15 @@ const DecisionInput = new GraphQLInputObjectType({
     proposalId: {
       type: new GraphQLNonNull(GraphQLID)
     }
+  },
+  outputFields: {
+    decision: {
+      type: DecisionType
+    }
+  },
+  mutateAndGetPayload: ({ approve, decision, userId, proposalId }, { pgPool }) => {
+    return { decision: pgdb(pgPool).addDecision({ approve, decision, userId, proposalId }) }
   }
 })
 
-const DecisionMutation = {
-  type: Decision,
-  args: {
-    input: { type: new GraphQLNonNull(DecisionInput) }
-  },
-  resolve: (obj, { input }, { pgPool }) => {
-    const { approve, decision, userId, proposalId } = input
-    return pgdb(pgPool).addDecision({ approve, decision, userId, proposalId })
-  }
-}
-
-export default DecisionMutation
+export default createDecisionMutation
