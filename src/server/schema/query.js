@@ -3,9 +3,17 @@ import {
   GraphQLList,
   GraphQLNonNull,
 } from 'graphql'
+import {
+  connectionArgs,
+  connectionDefinitions,
+  connectionFromArray
+} from 'graphql-relay'
 import { joinMonsterResolver } from './util'
 import { UserType, ProposalType }from './types'
 import { nodeField } from './definitions'
+
+const { connectionType: UserConnectionType } = connectionDefinitions({ nodeType: UserType })
+const { connectionType: ProposalConnectionType } = connectionDefinitions({ nodeType: ProposalType })
 
 const rootQuery = new GraphQLObjectType({
   name: 'ProjectAPI',
@@ -18,12 +26,19 @@ const rootQuery = new GraphQLObjectType({
     },
     node: nodeField,
     users: {
-      type: new GraphQLList(UserType),
-      resolve: joinMonsterResolver
+      type: UserConnectionType,
+      args: connectionArgs,
+      resolve: async (obj, args, ctx, resolveInfo) => {
+        const userList = await joinMonsterResolver(obj, args, ctx, resolveInfo)
+        return connectionFromArray(userList, args)
+      }
     },
     proposals: {
-      type: new GraphQLList(ProposalType),
-      resolve: joinMonsterResolver
+      type: ProposalConnectionType,
+      resolve: async (obj, args, ctx, resolveInfo) => {
+        const proposalList = await joinMonsterResolver(obj, args, ctx, resolveInfo)
+        return connectionFromArray(proposalList, args)
+      }
     }
   })
 })

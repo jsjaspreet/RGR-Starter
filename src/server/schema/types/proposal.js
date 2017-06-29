@@ -6,10 +6,17 @@ import {
   GraphQLBoolean,
   GraphQLID
 } from 'graphql'
+import {
+  connectionArgs,
+  connectionDefinitions,
+  connectionFromArray
+} from 'graphql-relay'
 import { nodeInterface } from '../definitions'
 import { globalIdField } from 'graphql-relay'
-import Reaction from './reaction'
-import Decision from './decision'
+import ReactionType from './reaction'
+import DecisionType from './decision'
+
+const { connectionType: ReactionConnectionType } = connectionDefinitions({ nodeType: ReactionType })
 
 const Proposal = new GraphQLObjectType({
   name: 'Proposal',
@@ -36,15 +43,19 @@ const Proposal = new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLBoolean)
     },
     decision: {
-      type: Decision,
+      type: DecisionType,
       sqlJoin(proposalTable, decisionTable) {
         return `${proposalTable}.id = ${decisionTable}.proposal_id`
       }
     },
     reactions: {
-      type: new GraphQLList(Reaction),
+      type: ReactionConnectionType,
+      args: connectionArgs,
       sqlJoin(proposalTable, reactionTable) {
         return `${proposalTable}.id = ${reactionTable}.proposal_id`
+      },
+      resolve: ({ reactions }, args) => {
+        return connectionFromArray(reactions, args)
       }
     }
   }),
