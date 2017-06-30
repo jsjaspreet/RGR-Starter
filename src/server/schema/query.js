@@ -11,9 +11,17 @@ import {
 import { joinMonsterResolver } from './util'
 import { UserType, ProposalType }from './types'
 import { nodeField } from './definitions'
+import { userFromContext } from '../util/auth'
 
 const { connectionType: UserConnectionType } = connectionDefinitions({ nodeType: UserType })
 const { connectionType: ProposalConnectionType } = connectionDefinitions({ nodeType: ProposalType })
+
+const viewerField = {
+  type: UserType,
+  resolve: async (root, args, ctx) => {
+    return await userFromContext(ctx)
+  }
+}
 
 const rootQuery = new GraphQLObjectType({
   name: 'ProjectAPI',
@@ -24,6 +32,7 @@ const rootQuery = new GraphQLObjectType({
       type: new GraphQLNonNull(rootQuery),
       resolve: () => ({})
     },
+    viewer: viewerField,
     node: nodeField,
     users: {
       type: UserConnectionType,

@@ -16,14 +16,14 @@ router.get('/api/status', (req, res) => res.status(200).json({ alive: true }))
 
 // Graphql API
 // graphql endpoints
-router.use('/graphql', graphqlHTTP({
+router.use('/graphql', graphqlHTTP((req) => ({
   schema: Schema,
-  context: { pgPool }
-}))
-router.use('/graphiql', graphqlHTTP({
+  context: { pgPool, req }
+})))
+router.use('/graphiql', graphqlHTTP((req) => ({
   schema: Schema,
   graphiql: true,
-  context: { pgPool }
-}))
+  context: { pgPool, req }
+})))
 
 export default router

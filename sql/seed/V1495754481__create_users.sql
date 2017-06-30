@@ -6,11 +6,11 @@ insert into users (
 values
   (
     'test@demo.com',
-    'Test Account',
-    'pass'
+    'test',
+    '$2a$10$8JsM5m0AIeQLhMmPFMCb2.PW3OlBSFBhweGHB/x8VfVSlW82lxRL2'
   ),
   (
     'admin@demo.com',
-    'Admin Account',
-    'pass'
+    'admin',
+    '$2a$10$8JsM5m0AIeQLhMmPFMCb2.PW3OlBSFBhweGHB/x8VfVSlW82lxRL2'
   );
