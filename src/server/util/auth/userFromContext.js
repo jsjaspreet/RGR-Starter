@@ -19,8 +19,10 @@ const userFromContext = async context => {
 
   // otherwise we haven't computed the value yet
   const cookies = req.cookies || null
-  // the value of the platform auth cooki
-  const cookieVal = cookies && cookies['pulse-app']
+  let cookieVal = cookies && cookies['pulse-app']
+  if (!cookieVal) {
+    cookieVal = req.headers['pulse-app']
+  }
 
   // if we can't find the id of the given user
   if (!cookieVal) {

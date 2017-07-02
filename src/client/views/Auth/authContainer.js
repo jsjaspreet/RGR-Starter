@@ -7,7 +7,7 @@ export default () => (
   <QueryRenderer
     environment={environment}
     query={graphql`
-           query containerQuery {
+           query authContainerQuery {
              root {
                ...Auth_root
              }

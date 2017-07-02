@@ -1,4 +1,5 @@
-import {Environment, Network, RecordSource, Store} from 'relay-runtime'
+import { Environment, Network, RecordSource, Store } from 'relay-runtime'
+import Cookie from 'js-cookie'
 
 const source = new RecordSource();
 const store = new Store(source);
@@ -7,13 +8,13 @@ const store = new Store(source);
 // and returns its results as a Promise:
 function fetchQuery(
   operation,
-  variables,
-) {
+  variables,) {
   return fetch('/graphql', {
     method: 'POST',
     headers: {
       // Add authentication and other headers here
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      'pulse-app': Cookie.get('pulse-app')
     },
     body: JSON.stringify({
       query: operation.text, // GraphQL text from input

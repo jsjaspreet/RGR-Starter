@@ -5,7 +5,6 @@ import Login from './Login'
 
 class Auth extends Component {
   render() {
-    console.log(this.props)
     return (
       <div style={styles.container}>
         <Login/>
@@ -18,10 +17,14 @@ export default createFragmentContainer(
   Auth,
   graphql`
       fragment Auth_root on ProjectAPI {
-          users {
-              id
-              email
-              username
+          users(first: 999) {
+              edges {
+                  node {
+                      id
+                      email
+                      username
+                  }
+              }
           }
       }
   `

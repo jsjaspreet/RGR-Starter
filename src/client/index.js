@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { BrowserRouter as Router } from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import App from './views/Root'
+import App from './views/Root/rootContainer'
 
 const render = (Component) => {
   ReactDOM.render(

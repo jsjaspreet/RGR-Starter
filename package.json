@@ -12,6 +12,7 @@
     "build:prod": "npm run clean && npm run build:server-prod && npm run build:client-prod",
     "build": "npm run clean && npm run build:server && npm run build:client",
     "clean": "rimraf build",
+    "update-relay": "npm run update-schema && npm run relay",
     "dev:client": "webpack-dev-server --config config/webpack/client.js",
     "update-schema": "babel-node ./scripts/updateSchema.js",
     "dev": "npm run clean && npm run build:server && npm run dev:server & npm run dev:client",
