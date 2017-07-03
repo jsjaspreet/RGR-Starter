@@ -44,6 +44,7 @@ const rootQuery = new GraphQLObjectType({
     },
     proposals: {
       type: ProposalConnectionType,
+      args: connectionArgs,
       resolve: async (obj, args, ctx, resolveInfo) => {
         const proposalList = await joinMonsterResolver(obj, args, ctx, resolveInfo)
         return connectionFromArray(proposalList, args)
