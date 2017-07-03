@@ -26,7 +26,6 @@ class CreateProposal extends Component {
       <FlatButton
         label="Submit"
         primary={true}
-        keyboardFocused={true}
         onClick={this.handleSubmit}
       />,
     ];
