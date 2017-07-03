@@ -5,7 +5,18 @@ import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import styles from './styles'
 import autobind from 'autobind-decorator'
+import Cookie from 'js-cookie'
+import { commitMutation, graphql } from 'react-relay'
+import environment from '../../../util/relayEnvironment'
 import PropTypes from 'prop-types'
+
+const mutation = graphql`
+    mutation LoginMutation($input: LoginInput!) {
+        Login(input: $input) {
+            token
+        }
+    }
+`
 
 class Login extends Component {
 
@@ -16,8 +27,26 @@ class Login extends Component {
 
   @autobind
   login() {
-    console.log(this.state.username)
-    console.log(this.state.password)
+    const { username, password } = this.state
+    const variables = {
+      input: {
+        username,
+        password
+      }
+    }
+    commitMutation(
+      environment,
+      {
+        mutation,
+        variables,
+        onCompleted: ({ Login }) => {
+          const { token } = Login
+          Cookie.set('pulse-app', token)
+          location.reload()
+        },
+        onError: err => console.log(err)
+      }
+    )
   }
 
   render() {
