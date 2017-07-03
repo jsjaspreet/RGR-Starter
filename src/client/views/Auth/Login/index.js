@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import styles from './styles'
+import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
 
 class Login extends Component {
@@ -11,6 +12,12 @@ class Login extends Component {
   state = {
     username: '',
     password: ''
+  }
+
+  @autobind
+  login() {
+    console.log(this.state.username)
+    console.log(this.state.password)
   }
 
   render() {
@@ -21,14 +28,18 @@ class Login extends Component {
             <div style={styles.textFields}>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <FontAwesome name="user" size="2x" style={{ width: 32 }}/>
-                <TextField style={styles.textField} id="username"/>
+                <TextField onChange={(event, username) => this.setState({ username })}
+                           style={styles.textField}
+                           id="username"/>
               </div>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <FontAwesome name="key" size="2x"/>
-                <TextField style={styles.textField} type="password" id="pw"/>
+                <TextField onChange={(event, password) => this.setState({ password })}
+                           style={styles.textField}
+                           type="password" id="pw"/>
               </div>
             </div>
-            <RaisedButton style={styles.signInBtn} label="Sign In" primary/>
+            <RaisedButton style={styles.signInBtn} onClick={this.login} label="Sign In" primary/>
           </div>
         </Paper>
       </div>
