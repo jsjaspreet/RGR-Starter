@@ -10,6 +10,8 @@ class App extends Component {
   render() {
     const { root } = this.props
     const loggedIn = Boolean(root.viewer)
+    console.log(loggedIn)
+    console.log(window.location.pathname)
     return (
       <div style={styles.container}>
         { loggedIn && <Chrome />}
@@ -17,12 +19,16 @@ class App extends Component {
           <Route
             path="/"
             exact
-            render={() => {
+            render={(props) => {
               return loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>
             }}
           />
-          <Route path="/login" component={Auth}/>
-          <Route path="/home" render={() => <Home root={root}/>}/>
+          <Route path="/login" render={(props) => {
+            return loggedIn ? <Redirect to="/home"/> : <Auth/>
+          }}/>
+          <Route path="/home" render={(props) => {
+            return loggedIn ? <Home root={root}/> : <Redirect to="/login"/>
+          }}/>
         </Switch>
       </div>
     )
@@ -34,6 +40,7 @@ export default createFragmentContainer(
   graphql`
       fragment Root_root on ProjectAPI {
           ...Home_root
+          ...Auth_root
           viewer {
               id
               email

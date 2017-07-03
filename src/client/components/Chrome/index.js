@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
+import Cookie from 'js-cookie'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 import FlatButton from 'material-ui/FlatButton'
 import LightBulb from 'material-ui/svg-icons/action/lightbulb-outline'
 
 class LogOut extends Component {
+  logout() {
+    if (Cookie.get('pulse-app')) {
+      Cookie.remove('pulse-app')
+    }
+    window.location = '/'
+    location.reload()
+  }
+
   render() {
     return (
-      <FlatButton style={{ color: 'white', marginTop: 6 }} label="Logout"/>
+      <FlatButton onClick={this.logout}
+                  style={{ color: 'white', marginTop: 6 }} label="Logout"/>
     )
   }
 }
