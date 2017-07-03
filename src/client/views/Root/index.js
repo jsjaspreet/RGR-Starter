@@ -8,7 +8,7 @@ import Chrome from '../../components/Chrome'
 
 class App extends Component {
   render() {
-    const { root } = this.props
+    const { root, location } = this.props
     const loggedIn = Boolean(root.viewer)
     return (
       <div style={styles.container}>
