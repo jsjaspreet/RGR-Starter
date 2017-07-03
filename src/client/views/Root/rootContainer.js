@@ -17,7 +17,7 @@ export default () => (
       if (error) {
         return <div>{error.message}</div>
       } else if (props) {
-        return <Root {...props} />
+        return <Root {...props} location={window.location.pathname}/>
       }
       return <div>Loading</div>
     }}

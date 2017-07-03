@@ -8,10 +8,8 @@ import Chrome from '../../components/Chrome'
 
 class App extends Component {
   render() {
-    const { root } = this.props
+    const { root, location } = this.props
     const loggedIn = Boolean(root.viewer)
-    console.log(loggedIn)
-    console.log(window.location.pathname)
     return (
       <div style={styles.container}>
         { loggedIn && <Chrome />}
@@ -19,14 +17,14 @@ class App extends Component {
           <Route
             path="/"
             exact
-            render={(props) => {
+            render={() => {
               return loggedIn ? <Redirect to="/home"/> : <Redirect to="/login"/>
             }}
           />
-          <Route path="/login" render={(props) => {
+          <Route path="/login" render={() => {
             return loggedIn ? <Redirect to="/home"/> : <Auth/>
           }}/>
-          <Route path="/home" render={(props) => {
+          <Route path="/home" render={() => {
             return loggedIn ? <Home root={root}/> : <Redirect to="/login"/>
           }}/>
         </Switch>
