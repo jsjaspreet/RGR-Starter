@@ -25,8 +25,6 @@ export default createFragmentContainer(
                   node {
                       ...ProposalPreview_proposal
                       id
-                      proposal
-                      createdAt
                   }
               }
           }

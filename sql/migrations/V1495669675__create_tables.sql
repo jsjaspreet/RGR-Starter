@@ -7,7 +7,8 @@ create table users (
 
 create table proposals (
   id serial not null primary key,
-  proposal text,
+  proposal_text text,
+  proposal_slug text unique,
   user_id integer references users,
   created_at timestamp not null default current_timestamp,
   active boolean not null

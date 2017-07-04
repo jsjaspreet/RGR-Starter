@@ -28,8 +28,13 @@ const Proposal = new GraphQLObjectType({
       ...globalIdField(),
       sqlDeps: ['id']
     },
-    proposal: {
-      type: new GraphQLNonNull(GraphQLString)
+    proposalText: {
+      type: new GraphQLNonNull(GraphQLString),
+      sqlColumn: 'proposal_text'
+    },
+    proposalSlug: {
+      type: new GraphQLNonNull(GraphQLString),
+      sqlColumn: 'proposal_slug'
     },
     userId: {
       type: GraphQLID,

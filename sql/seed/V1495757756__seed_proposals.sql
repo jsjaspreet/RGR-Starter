@@ -1,21 +1,25 @@
 insert into proposals (
-  proposal,
+  proposal_text,
+  proposal_slug,
   user_id,
   active
 )
 values
 (
   'Use GraphQL instead of REST',
+  'use-graphql-instead-of-rest',
   1,
   true
 ),
 (
   'Use Apollo instead of Relay',
+  'use-apollo-instead-of-relay',
   2,
   true
 ),
 (
   'Use React instead of Vue.js',
+  'use-react-instead-of-vuejs',
   1,
   true
 );

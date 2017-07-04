@@ -73,7 +73,8 @@
     "react-hot-loader": "next",
     "react-relay": "^1.0.0",
     "react-router-dom": "^4.1.1",
-    "react-stack-grid": "^0.2.2"
+    "react-stack-grid": "^0.2.2",
+    "slug": "^0.9.1"
   },
   "babel": {
     "presets": [
