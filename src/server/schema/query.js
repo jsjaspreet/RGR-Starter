@@ -1,6 +1,7 @@
 import {
   GraphQLObjectType,
-  GraphQLList,
+  GraphQLInputObjectType,
+  GraphQLString,
   GraphQLNonNull,
 } from 'graphql'
 import {
@@ -8,8 +9,9 @@ import {
   connectionDefinitions,
   connectionFromArray
 } from 'graphql-relay'
+import pgdb from '../database/pgdb'
 import { joinMonsterResolver } from './util'
-import { UserType, ProposalType }from './types'
+import { UserType, ProposalType } from './types'
 import { nodeField } from './definitions'
 import { userFromContext } from '../util/auth'
 
@@ -40,6 +42,15 @@ const rootQuery = new GraphQLObjectType({
       resolve: async (obj, args, ctx, resolveInfo) => {
         const userList = await joinMonsterResolver(obj, args, ctx, resolveInfo)
         return connectionFromArray(userList, args)
+      }
+    },
+    proposal: {
+      type: ProposalType,
+      args: {
+        slug: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve: async (obj, { slug }, { pgPool }) => {
+        return await pgdb(pgPool).getProposalBySlug({ slug })
       }
     },
     proposals: {

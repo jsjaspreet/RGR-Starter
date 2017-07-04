@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { createFragmentContainer, graphql } from 'react-relay'
 import { Card, CardTitle, CardActions, CardText } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -15,7 +16,9 @@ class ProposalPreview extends Component {
           {proposalText}
         </CardText>
         <CardActions>
-          <RaisedButton primary label="See Vote"/>
+          <Link to={`/proposals/${proposalSlug}`}>
+            <RaisedButton primary label="See Vote"/>
+          </Link>
         </CardActions>
       </Card>
     )

@@ -51,6 +51,18 @@ export default pgPool => {
         return humps.camelizeKeys(res.rows[0])
       })
     },
+    getProposalBySlug({ slug }) {
+      return pgPool.query(`
+        select * 
+        from proposals 
+        where proposal_slug=$1
+      `, [slug]).then(res => {
+        if (res.rows.length < 1) {
+          return null
+        }
+        return humps.camelizeKeys(res.rows[0])
+      })
+    },
     getUserById({ id }) {
       return pgPool.query(`
         select id, email, username 
