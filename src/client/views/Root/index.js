@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import styles from './styles'
 import Auth from '../Auth/authContainer'
 import Home from '../Home'
+import ProposalDetails from '../ProposalDetails'
 import Chrome from '../../components/Chrome'
 
 class App extends Component {
@@ -27,6 +28,11 @@ class App extends Component {
           <Route path="/home" render={() => {
             return loggedIn ? <Home root={root}/> : <Redirect to="/login"/>
           }}/>
+          <Route path="/proposal/:proposalSlug" render={(matchProps) => {
+            const { match } = matchProps
+            const { proposalSlug } = match.params
+            return loggedIn ? <ProposalDetails proposalSlug={proposalSlug} root={root}/> : <Redirect to="/login"/>
+          }}/>
         </Switch>
       </div>
     )
@@ -39,6 +45,7 @@ export default createFragmentContainer(
       fragment Root_root on ProjectAPI {
           ...Home_root
           ...Auth_root
+          ...ProposalDetails_root
           viewer {
               id
               email

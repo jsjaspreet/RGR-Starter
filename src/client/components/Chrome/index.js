@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import Cookie from 'js-cookie'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
@@ -27,7 +28,7 @@ class Chrome extends Component {
     return (
       <AppBar
         title="Pulse"
-        iconElementLeft={<IconButton><LightBulb /></IconButton>}
+        iconElementLeft={<Link to="/"><IconButton><LightBulb color="white"/></IconButton></Link>}
         iconElementRight={<LogOut />}
       />
     );

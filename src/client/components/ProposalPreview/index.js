@@ -16,7 +16,7 @@ class ProposalPreview extends Component {
           {proposalText}
         </CardText>
         <CardActions>
-          <Link to={`/proposals/${proposalSlug}`}>
+          <Link to={`/proposal/${proposalSlug}`}>
             <RaisedButton primary label="See Vote"/>
           </Link>
         </CardActions>
