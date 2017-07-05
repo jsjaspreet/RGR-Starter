@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
 
 class CreateProposal extends Component {
   state = {
     open: false,
+    proposalText: ''
   };
 
   handleOpen = () => {
@@ -24,7 +26,7 @@ class CreateProposal extends Component {
         onClick={() => this.setState({ open: false })}
       />,
       <FlatButton
-        label="Submit"
+        label="Create"
         primary={true}
         onClick={this.handleSubmit}
       />,
@@ -33,13 +35,20 @@ class CreateProposal extends Component {
       <div style={{ marginLeft: 100, marginBottom: 50 }}>
         <RaisedButton label="Create New Proposal" onClick={this.handleOpen}/>
         <Dialog
-          title="Dialog With Actions"
+          title="Create New Proposal"
           actions={actions}
           modal={false}
           open={this.state.open}
-          onRequestClose={this.handleSubmit}
-        >
-          The actions in this window were passed in as an array of React objects.
+          onRequestClose={this.handleSubmit}>
+          <div>
+            <TextField
+              floatingLabelText="Proposal Text"
+              value={this.state.proposalText}
+              multiLine
+              style={{width: "100%"}}
+              onChange={(event, proposalText) => this.setState({ proposalText })}
+            />
+          </div>
         </Dialog>
       </div>
     )
