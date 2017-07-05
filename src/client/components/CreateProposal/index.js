@@ -3,11 +3,26 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
+import environment from '../../util/relayEnvironment'
+import { commitMutation, graphql } from 'react-relay'
+
+const mutation = graphql`
+    mutation CreateProposalMutation($input: CreateProposalInput!) {
+        AddProposal(input: $input) {
+            proposal {
+                id
+                proposalText
+                proposalSlug
+                createdAt
+            }
+        }
+    }
+`
 
 class CreateProposal extends Component {
   state = {
     open: false,
-    proposalText: ''
+    proposal: ''
   };
 
   handleOpen = () => {
@@ -16,6 +31,23 @@ class CreateProposal extends Component {
 
   handleSubmit = () => {
     this.setState({ open: false });
+    const { proposal } = this.state
+    const variables = {
+      input: {
+        proposal
+      }
+    }
+    commitMutation(
+      environment,
+      {
+        mutation,
+        variables,
+        updater: (store) => {
+          const payload = store.getRootField('AddProposal')
+          console.log(payload)
+        }
+      }
+    )
   };
 
   render() {
@@ -43,10 +75,10 @@ class CreateProposal extends Component {
           <div>
             <TextField
               floatingLabelText="Proposal Text"
-              value={this.state.proposalText}
+              value={this.state.proposal}
               multiLine
-              style={{width: "100%"}}
-              onChange={(event, proposalText) => this.setState({ proposalText })}
+              style={{ width: "100%" }}
+              onChange={(event, proposal) => this.setState({ proposal })}
             />
           </div>
         </Dialog>

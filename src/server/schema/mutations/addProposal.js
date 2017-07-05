@@ -6,6 +6,7 @@ import {
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { ProposalType } from '../types'
 import pgdb from '../../database/pgdb'
+import { userFromContext } from '../../util/auth'
 
 const createProposalMutation = mutationWithClientMutationId({
   name: 'CreateProposal',
@@ -14,7 +15,7 @@ const createProposalMutation = mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLString)
     },
     userId: {
-      type: new GraphQLNonNull(GraphQLID)
+      type: GraphQLID
     }
   },
   outputFields: {
@@ -22,8 +23,14 @@ const createProposalMutation = mutationWithClientMutationId({
       type: ProposalType
     }
   },
-  mutateAndGetPayload: ({ proposal, userId }, { pgPool }) => {
-    return { proposal: pgdb(pgPool).addProposal({ proposal, userId }) }
+  mutateAndGetPayload: async ({ proposal, userId }, ctx) => {
+    const { pgPool } = ctx
+    let id = userId
+    if (!userId) {
+      const user = await userFromContext(ctx)
+      id = user.id
+    }
+    return { proposal: pgdb(pgPool).addProposal({ proposal, userId: id }) }
   }
 })
 
