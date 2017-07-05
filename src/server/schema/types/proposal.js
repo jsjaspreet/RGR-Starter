@@ -18,7 +18,7 @@ import DecisionType from './decision'
 
 const { connectionType: ReactionConnectionType } = connectionDefinitions({ nodeType: ReactionType })
 
-const Proposal = new GraphQLObjectType({
+const ProposalType = new GraphQLObjectType({
   name: 'Proposal',
   sqlTable: 'proposals',
   uniqueKey: 'id',
@@ -67,4 +67,6 @@ const Proposal = new GraphQLObjectType({
   interfaces: () => [nodeInterface]
 })
 
-export default Proposal
+const { edgeType: ProposalEdgeType, connectionType: ProposalConnectionType } = connectionDefinitions({ nodeType: ProposalType })
+
+export { ProposalType, ProposalEdgeType, ProposalConnectionType }

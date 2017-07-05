@@ -3,9 +3,9 @@ import {
   GraphQLID,
   GraphQLNonNull
 } from 'graphql'
-import { mutationWithClientMutationId } from 'graphql-relay'
+import { mutationWithClientMutationId, offsetToCursor } from 'graphql-relay'
 import slug from 'slug'
-import { ProposalType } from '../types'
+import { ProposalEdgeType } from '../types'
 import pgdb from '../../database/pgdb'
 import { userFromContext } from '../../util/auth'
 
@@ -20,8 +20,12 @@ const createProposalMutation = mutationWithClientMutationId({
     }
   },
   outputFields: {
-    proposal: {
-      type: ProposalType
+    newProposalEdge: {
+      type: ProposalEdgeType,
+      resolve: ({ newProposal }) => ({
+        cursor: offsetToCursor(newProposal.id),
+        node: newProposal
+      })
     }
   },
   mutateAndGetPayload: async ({ proposal, userId }, ctx) => {
@@ -32,7 +36,7 @@ const createProposalMutation = mutationWithClientMutationId({
       id = user.id
     }
     const newProposal = await pgdb(pgPool).addProposal({ proposal, slug: slug(proposal), userId: id })
-    return { proposal: newProposal }
+    return { newProposal }
   }
 })
 

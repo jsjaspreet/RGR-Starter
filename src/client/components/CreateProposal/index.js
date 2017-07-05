@@ -10,11 +10,14 @@ import { ConnectionHandler } from 'relay-runtime'
 const mutation = graphql`
     mutation CreateProposalMutation($input: CreateProposalInput!) {
         AddProposal(input: $input) {
-            proposal {
-                id
-                proposalText
-                proposalSlug
-                createdAt
+            newProposalEdge {
+                cursor
+                node {
+                    id
+                    proposalText
+                    proposalSlug
+                    createdAt
+                }
             }
         }
     }
@@ -45,7 +48,7 @@ class CreateProposal extends Component {
         variables,
         updater: (store) => {
           const payload = store.getRootField('AddProposal')
-          const newEdge = payload.getLinkedRecord('proposal')
+          const newEdge = payload.getLinkedRecord('newProposalEdge')
           const root = store.get(42)
           const conn = ConnectionHandler.getConnection(
             root,

@@ -12,12 +12,11 @@ import {
 } from 'graphql-relay'
 import pgdb from '../database/pgdb'
 import { joinMonsterResolver } from './util'
-import { UserType, ProposalType } from './types'
+import { UserType, ProposalType, ProposalConnectionType } from './types'
 import { nodeField } from './definitions'
 import { userFromContext } from '../util/auth'
 
 const { connectionType: UserConnectionType } = connectionDefinitions({ nodeType: UserType })
-const { connectionType: ProposalConnectionType } = connectionDefinitions({ nodeType: ProposalType })
 
 const viewerField = {
   type: UserType,
