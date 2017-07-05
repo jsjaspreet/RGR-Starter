@@ -1,6 +1,7 @@
 import {
   GraphQLObjectType,
   GraphQLInputObjectType,
+  GraphQLID,
   GraphQLString,
   GraphQLNonNull,
 } from 'graphql'
@@ -28,6 +29,10 @@ const viewerField = {
 const rootQuery = new GraphQLObjectType({
   name: 'ProjectAPI',
   fields: () => ({
+    id: {
+      type: GraphQLID,
+      resolve: () => 42
+    },
     // this is a complete hack since root queries can't have list fields
     // for more info: https://github.com/facebook/relay/issues/112
     root: {

@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 import environment from '../../util/relayEnvironment'
 import { commitMutation, graphql } from 'react-relay'
+import { ConnectionHandler } from 'relay-runtime'
 
 const mutation = graphql`
     mutation CreateProposalMutation($input: CreateProposalInput!) {
@@ -44,7 +45,13 @@ class CreateProposal extends Component {
         variables,
         updater: (store) => {
           const payload = store.getRootField('AddProposal')
-          console.log(payload)
+          const newEdge = payload.getLinkedRecord('proposal')
+          const root = store.get(42)
+          const conn = ConnectionHandler.getConnection(
+            root,
+            'ProposalGrid_proposals'
+          )
+          ConnectionHandler.insertEdgeAfter(conn, newEdge)
         }
       }
     )

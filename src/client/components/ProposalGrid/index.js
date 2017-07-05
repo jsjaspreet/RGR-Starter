@@ -20,7 +20,7 @@ export default createFragmentContainer(
   ProposalGrid,
   graphql`
       fragment ProposalGrid_root on ProjectAPI {
-          proposals(first: 99999) {
+          proposals(first: 99999) @connection(key: "ProposalGrid_proposals"){
               edges {
                   node {
                       ...ProposalPreview_proposal
