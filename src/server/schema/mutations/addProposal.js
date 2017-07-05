@@ -4,6 +4,7 @@ import {
   GraphQLNonNull
 } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
+import slug from 'slug'
 import { ProposalType } from '../types'
 import pgdb from '../../database/pgdb'
 import { userFromContext } from '../../util/auth'
@@ -30,7 +31,8 @@ const createProposalMutation = mutationWithClientMutationId({
       const user = await userFromContext(ctx)
       id = user.id
     }
-    return { proposal: pgdb(pgPool).addProposal({ proposal, userId: id }) }
+    const newProposal = await pgdb(pgPool).addProposal({ proposal, slug: slug(proposal), userId: id })
+    return { proposal: newProposal }
   }
 })
 

@@ -2,12 +2,12 @@ import humps from 'humps'
 
 export default pgPool => {
   return {
-    addProposal({ proposal, userId }) {
+    addProposal({ proposal, slug, userId }) {
       return pgPool.query(`
-        insert into proposals(proposal, user_id, active)
-        values($1, $2, true)
+        insert into proposals(proposal_text, user_id, proposal_slug, active)
+        values($1, $2, $3, true)
         returning *
-      `, [proposal, userId]).then(res => {
+      `, [proposal, userId, slug]).then(res => {
         return humps.camelizeKeys(res.rows[0])
       })
     },
