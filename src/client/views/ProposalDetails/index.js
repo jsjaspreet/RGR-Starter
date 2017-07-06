@@ -9,6 +9,7 @@ class ProposalDetails extends Component {
 
   render() {
     const { proposal } = this.props.root
+    console.log(proposal)
     if (!proposal) {
       return <CircularProgress/>
     }
@@ -32,6 +33,19 @@ export default createRefetchContainer(
             proposal(slug: $slug) {
                 id
                 proposalText
+                reactions(first: 999) {
+                    edges {
+                        node {
+                            id
+                            approve
+                            comment
+                            author {
+                                id
+                                username
+                            }
+                        }
+                    }
+                }
             }
         }
     `
