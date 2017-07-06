@@ -1,7 +1,6 @@
 import {
   GraphQLObjectType,
   GraphQLNonNull,
-  GraphQLList,
   GraphQLString,
   GraphQLBoolean,
   GraphQLID
@@ -15,6 +14,7 @@ import { nodeInterface } from '../definitions'
 import { globalIdField } from 'graphql-relay'
 import ReactionType from './reaction'
 import DecisionType from './decision'
+import UserType from './user'
 
 const { connectionType: ReactionConnectionType } = connectionDefinitions({ nodeType: ReactionType })
 
@@ -46,6 +46,12 @@ const ProposalType = new GraphQLObjectType({
     },
     active: {
       type: new GraphQLNonNull(GraphQLBoolean)
+    },
+    createdBy: {
+      type: UserType,
+      sqlJoin(proposalTable, userTable) {
+        return `${proposalTable}.user_id = ${userTable}.id`
+      }
     },
     decision: {
       type: DecisionType,
