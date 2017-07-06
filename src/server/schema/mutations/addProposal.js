@@ -23,7 +23,7 @@ const createProposalMutation = mutationWithClientMutationId({
     newProposalEdge: {
       type: ProposalEdgeType,
       resolve: ({ newProposal, user }) => {
-        newProposal.createdBy = user
+        newProposal.author = user
         return {
           cursor: offsetToCursor(newProposal.id),
           node: newProposal

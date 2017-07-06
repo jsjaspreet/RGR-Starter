@@ -47,7 +47,7 @@ const ProposalType = new GraphQLObjectType({
     active: {
       type: new GraphQLNonNull(GraphQLBoolean)
     },
-    createdBy: {
+    author: {
       type: UserType,
       sqlJoin(proposalTable, userTable) {
         return `${proposalTable}.user_id = ${userTable}.id`

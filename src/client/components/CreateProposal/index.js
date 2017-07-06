@@ -17,7 +17,7 @@ const mutation = graphql`
                     proposalText
                     proposalSlug
                     createdAt
-                    createdBy {
+                    author {
                         id
                         username
                     }

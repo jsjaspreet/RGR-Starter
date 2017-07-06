@@ -7,6 +7,7 @@ import {
 } from 'graphql'
 import { nodeInterface } from '../definitions'
 import { globalIdField } from 'graphql-relay'
+import UserType from './user'
 
 const Reaction = new GraphQLObjectType({
   name: 'Reaction',
@@ -27,6 +28,12 @@ const Reaction = new GraphQLObjectType({
     userId: {
       type: GraphQLID,
       sqlColumn: 'user_id'
+    },
+    author: {
+      type: UserType,
+      sqlJoin(proposalTable, userTable) {
+        return `${proposalTable}.user_id = ${userTable}.id`
+      }
     },
     createdAt: {
       type: new GraphQLNonNull(GraphQLString),

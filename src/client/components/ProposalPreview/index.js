@@ -9,9 +9,8 @@ import styles from './styles'
 class ProposalPreview extends Component {
   render() {
     const { proposal } = this.props
-    const { proposalText, proposalSlug, createdAt, createdBy } = proposal
-    console.log("createdAt", createdAt)
-    const { username } = createdBy
+    const { proposalText, proposalSlug, createdAt, author } = proposal
+    const { username } = author
     const momentCreated = moment(createdAt).format("MMM D YYYY")
     return (
       <Card style={styles.proposalContainer}>
@@ -34,7 +33,7 @@ export default createFragmentContainer(
           proposalText
           proposalSlug
           createdAt
-          createdBy {
+          author {
               username
           }
       }
