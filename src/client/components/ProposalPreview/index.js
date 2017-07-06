@@ -10,6 +10,7 @@ class ProposalPreview extends Component {
   render() {
     const { proposal } = this.props
     const { proposalText, proposalSlug, createdAt, createdBy } = proposal
+    console.log("createdAt", createdAt)
     const { username } = createdBy
     const momentCreated = moment(createdAt).format("MMM D YYYY")
     return (

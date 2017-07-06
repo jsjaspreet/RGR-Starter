@@ -17,6 +17,10 @@ const mutation = graphql`
                     proposalText
                     proposalSlug
                     createdAt
+                    createdBy {
+                        id
+                        username
+                    }
                 }
             }
         }
@@ -41,6 +45,7 @@ class CreateProposal extends Component {
         proposal
       }
     }
+    this.setState({ proposal: '' })
     commitMutation(
       environment,
       {
@@ -74,7 +79,7 @@ class CreateProposal extends Component {
       />,
     ];
     return (
-      <div style={{ marginLeft: 100, marginBottom: 50 }}>
+      <div style={{ marginLeft: 100, marginBottom: 20 }}>
         <RaisedButton label="Create New Proposal" onClick={this.handleOpen}/>
         <Dialog
           title="Create New Proposal"

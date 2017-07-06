@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 import ProposalGrid from '../../components/ProposalGrid'
 import CreateProposal from '../../components/CreateProposal'
+import styles from './styles'
 
 class Home extends Component {
 
@@ -10,8 +11,12 @@ class Home extends Component {
     const greeting = `Welcome ${root.viewer.username}!`
     return (
       <div>
-        <h1 style={{ marginLeft: 100, marginTop: 10, marginBottom: 10 }}>{greeting}</h1>
-        <CreateProposal/>
+        <div style={{ display: "flex" }}>
+          <h1 style={styles.greetingStyle}>{greeting}</h1>
+          <div style={{ marginTop: 20 }}>
+            <CreateProposal/>
+          </div>
+        </div>
         <ProposalGrid root={root}/>
       </div>
     )
