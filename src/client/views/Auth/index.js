@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { createFragmentContainer, graphql } from 'react-relay'
 import styles from './styles'
 import Login from './Login'
 
@@ -13,20 +12,4 @@ class Auth extends Component {
   }
 }
 
-export default createFragmentContainer(
-  Auth,
-  graphql`
-      fragment Auth_root on ProjectAPI {
-          users(first: 999) {
-              edges {
-                  node {
-                      id
-                      email
-                      username
-                  }
-              }
-          }
-      }
-  `
-)
-
+export default Auth
