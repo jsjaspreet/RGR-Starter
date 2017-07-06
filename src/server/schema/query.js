@@ -10,7 +10,7 @@ import {
   connectionDefinitions,
   connectionFromArray
 } from 'graphql-relay'
-import pgdb from '../database/pgdb'
+import escape from 'pg-escape'
 import { joinMonsterResolver } from './util'
 import { UserType, ProposalType, ProposalConnectionType } from './types'
 import { nodeField } from './definitions'
@@ -53,8 +53,11 @@ const rootQuery = new GraphQLObjectType({
       args: {
         slug: { type: new GraphQLNonNull(GraphQLString) }
       },
-      resolve: async (obj, { slug }, { pgPool }) => {
-        return await pgdb(pgPool).getProposalBySlug({ slug })
+      resolve: async (obj, args, ctx, resolveInfo) => {
+        return await joinMonsterResolver(obj, args, ctx, resolveInfo)
+      },
+      where: (proposalTable, { slug }) => {
+        return escape(`${proposalTable}.proposal_slug=%L`, slug)
       }
     },
     proposals: {
