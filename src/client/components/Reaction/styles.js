@@ -13,7 +13,7 @@ export default {
   },
   topRow: {
     display: 'flex',
-    height: 30,
+    height: 36,
     alignItems: 'center',
     borderBottom: '1px solid gray',
   },
