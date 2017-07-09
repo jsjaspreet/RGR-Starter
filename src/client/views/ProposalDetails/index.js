@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CircularProgress from 'material-ui/CircularProgress'
 import { createRefetchContainer, graphql } from 'react-relay'
 import Reactions from '../../components/Reactions'
+import styles from './styles'
 
 class ProposalDetails extends Component {
   componentDidMount() {
@@ -16,8 +17,10 @@ class ProposalDetails extends Component {
     const { proposalText } = proposal
     return (
       <div>
-        <h1>{proposalText}</h1>
-        <div>
+        <div style={styles.proposalContainer}>
+          <h1 style={styles.proposalText}>{proposalText}</h1>
+        </div>
+        <div style={styles.reactionContainer}>
           <Reactions proposal={proposal}/>
         </div>
       </div>

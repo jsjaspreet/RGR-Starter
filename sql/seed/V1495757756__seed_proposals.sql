@@ -38,6 +38,18 @@ insert into reactions (
 ),
 (
   false,
+  'REST > GraphQL',
+  1,
+  1
+),
+(
+  false,
+  'OK',
+  2,
+  1
+),
+(
+  false,
   'Relay has more support than Apollo',
   1,
   2
