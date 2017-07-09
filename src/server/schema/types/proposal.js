@@ -12,11 +12,9 @@ import {
 } from 'graphql-relay'
 import { nodeInterface } from '../definitions'
 import { globalIdField } from 'graphql-relay'
-import ReactionType from './reaction'
+import { ReactionConnectionType } from './reaction'
 import DecisionType from './decision'
 import UserType from './user'
-
-const { connectionType: ReactionConnectionType } = connectionDefinitions({ nodeType: ReactionType })
 
 const ProposalType = new GraphQLObjectType({
   name: 'Proposal',

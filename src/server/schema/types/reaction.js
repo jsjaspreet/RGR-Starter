@@ -5,11 +5,14 @@ import {
   GraphQLBoolean,
   GraphQLID
 } from 'graphql'
+import {
+  connectionDefinitions,
+} from 'graphql-relay'
 import { nodeInterface } from '../definitions'
 import { globalIdField } from 'graphql-relay'
 import UserType from './user'
 
-const Reaction = new GraphQLObjectType({
+const ReactionType = new GraphQLObjectType({
   name: 'Reaction',
   sqlTable: 'reactions',
   uniqueKey: 'id',
@@ -47,4 +50,6 @@ const Reaction = new GraphQLObjectType({
   interfaces: () => [nodeInterface]
 })
 
-export default Reaction
+const { edgeType: ReactionEdgeType, connectionType: ReactionConnectionType } = connectionDefinitions({ nodeType: ReactionType })
+
+export { ReactionType, ReactionConnectionType, ReactionEdgeType }
