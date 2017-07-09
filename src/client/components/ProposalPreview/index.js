@@ -18,7 +18,7 @@ class ProposalPreview extends Component {
                    subtitleStyle={{ fontSize: 12 }}/>
         <CardActions>
           <Link to={`/proposal/${proposalSlug}`}>
-            <RaisedButton primary label="See Vote"/>
+            <RaisedButton primary label="Details"/>
           </Link>
         </CardActions>
       </Card>
