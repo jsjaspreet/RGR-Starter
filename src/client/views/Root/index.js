@@ -44,7 +44,6 @@ export default createFragmentContainer(
   graphql`
       fragment Root_root on ProjectAPI {
           ...Home_root
-          ...Auth_root
           ...ProposalDetails_root
           viewer {
               id

@@ -25,9 +25,9 @@ class Reaction extends Component {
 export default createFragmentContainer(
   Reaction,
   graphql`
-      fragment Reaction_reaction on Proposal {
-          proposalText
-          proposalSlug
+      fragment Reaction_reaction on Reaction {
+          approve
+          comment
           createdAt
           author {
               username

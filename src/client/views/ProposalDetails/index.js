@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import CircularProgress from 'material-ui/CircularProgress'
 import { createRefetchContainer, graphql } from 'react-relay'
+import Reactions from '../../components/Reactions'
 
 class ProposalDetails extends Component {
   componentDidMount() {
@@ -9,7 +10,6 @@ class ProposalDetails extends Component {
 
   render() {
     const { proposal } = this.props.root
-    console.log(proposal)
     if (!proposal) {
       return <CircularProgress/>
     }
@@ -17,6 +17,9 @@ class ProposalDetails extends Component {
     return (
       <div>
         <h1>{proposalText}</h1>
+        <div>
+          <Reactions proposal={proposal}/>
+        </div>
       </div>
     )
   }
@@ -25,7 +28,7 @@ class ProposalDetails extends Component {
 export default createRefetchContainer(
   ProposalDetails,
   {
-    root:  graphql.experimental`
+    root: graphql.experimental`
         fragment ProposalDetails_root on ProjectAPI
         @argumentDefinitions(
             slug: {type: "String!", defaultValue: ""}
@@ -33,19 +36,7 @@ export default createRefetchContainer(
             proposal(slug: $slug) {
                 id
                 proposalText
-                reactions(first: 999) {
-                    edges {
-                        node {
-                            id
-                            approve
-                            comment
-                            author {
-                                id
-                                username
-                            }
-                        }
-                    }
-                }
+                ...Reactions_proposal
             }
         }
     `
