@@ -9,7 +9,10 @@ class ProposalGrid extends Component {
     const { root } = this.props
     // <div style={styles.containerStyle}>
     return (
-      <StackGrid columnWidth={300}>
+      <StackGrid
+        columnWidth={280}
+        gutterWidth={20}
+        gutterHeight={20}>
         {root.proposals.edges.map(edge => <ProposalPreview proposal={edge.node} key={edge.node.id}/>)}
       </StackGrid>
     )

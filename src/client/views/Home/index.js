@@ -11,13 +11,15 @@ class Home extends Component {
     const greeting = `Welcome ${root.viewer.username}!`
     return (
       <div>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <h1 style={styles.greetingStyle}>{greeting}</h1>
           <div style={{ marginTop: 20 }}>
             <CreateProposal/>
           </div>
         </div>
-        <ProposalGrid root={root}/>
+        <div style={styles.proposalGrid}>
+          <ProposalGrid root={root}/>
+        </div>
       </div>
     )
   }
