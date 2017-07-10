@@ -22,7 +22,7 @@ class ProposalDetails extends Component {
           <h1 style={styles.proposalText}>{proposalText}</h1>
         </div>
         <div style={styles.createReaction}>
-          <CreateReaction/>
+          <CreateReaction proposal={proposal}/>
         </div>
         <div style={styles.reactionContainer}>
           <Reactions proposal={proposal}/>
@@ -44,6 +44,7 @@ export default createRefetchContainer(
                 id
                 proposalText
                 ...Reactions_proposal
+                ...CreateReaction_proposal
             }
         }
     `

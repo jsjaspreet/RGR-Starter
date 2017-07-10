@@ -4,7 +4,7 @@ import {
   GraphQLID,
   GraphQLNonNull
 } from 'graphql'
-import { mutationWithClientMutationId, offsetToCursor } from 'graphql-relay'
+import { mutationWithClientMutationId, fromGlobalId, offsetToCursor } from 'graphql-relay'
 import { ReactionEdgeType } from '../types'
 import pgdb from '../../database/pgdb'
 import { userFromContext } from '../../util/auth'
@@ -19,7 +19,7 @@ const createReactionMutation = mutationWithClientMutationId({
       type: GraphQLString
     },
     userId: {
-      type: new GraphQLNonNull(GraphQLID)
+      type: GraphQLID
     },
     proposalId: {
       type: new GraphQLNonNull(GraphQLID)
@@ -39,15 +39,17 @@ const createReactionMutation = mutationWithClientMutationId({
   },
   mutateAndGetPayload: async ({ approve, comment, userId, proposalId }, ctx) => {
     const { pgPool } = ctx
-    let id = userId
+    let computedUserId = userId
     let user
     if (!userId) {
       user = await userFromContext(ctx)
-      id = user.id
+      computedUserId = user.id
     } else {
-      user = await pgdb(pgPool).getUserById({ id })
+      user = await pgdb(pgPool).getUserById({ id: computedUserId })
     }
-    const newReaction = await pgdb(pgPool).addReaction({ approve, comment, userId: id, proposalId })
+    const { id: computedProposalId } = fromGlobalId(proposalId)
+    const newReaction = await pgdb(pgPool)
+      .addReaction({ approve, comment, userId: computedUserId, proposalId: computedProposalId })
     return { newReaction, user }
   }
 })

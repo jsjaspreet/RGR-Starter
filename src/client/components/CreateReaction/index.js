@@ -1,23 +1,27 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import Checkbox from 'material-ui/Checkbox'
+import { createFragmentContainer, graphql } from 'react-relay'
 import RaisedButton from 'material-ui/RaisedButton'
+import { createReaction } from '../../mutations/CreateReaction'
 import styles from './styles'
 
 const initialState = {
   approve: false,
-  reactionText: ''
+  comment: ''
 }
 
 class CreateReaction extends Component {
   state = {
     approve: false,
-    reactionText: ''
+    comment: ''
   }
 
   handleSubmit = () => {
-    const { approve, reactionText } = this.state
-    console.log({ approve, reactionText })
+    const { approve, comment } = this.state
+    const { proposal } = this.props
+    const { id: proposalId } = proposal
+    createReaction({ approve, comment, proposalId })
     this.setState(initialState)
   }
 
@@ -26,10 +30,10 @@ class CreateReaction extends Component {
       <div style={styles.container}>
         <TextField
           floatingLabelText="Enter your reaction"
-          value={this.state.reactionText}
+          value={this.state.comment}
           style={styles.reactionInput}
           multiLine
-          onChange={(event, reactionText) => this.setState({ reactionText })}
+          onChange={(event, comment) => this.setState({ comment })}
         />
         <div style={styles.approve}>
           <Checkbox
@@ -50,4 +54,11 @@ class CreateReaction extends Component {
   }
 }
 
-export default CreateReaction
+export default createFragmentContainer(
+  CreateReaction,
+  graphql`
+      fragment CreateReaction_proposal on Proposal {
+          id
+      }
+  `
+)
