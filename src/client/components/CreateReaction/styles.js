@@ -2,7 +2,9 @@ export default {
   container: {
     display: "flex",
     alignItems: 'flex-end',
-    maxWidth: 609
+    maxWidth: 633,
+    marginLeft: 12,
+    marginRight: 12,
   },
   approve: {
     marginBottom: 8,
