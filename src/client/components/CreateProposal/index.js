@@ -3,29 +3,7 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
-import environment from '../../util/relayEnvironment'
-import { commitMutation, graphql } from 'react-relay'
-import { ConnectionHandler } from 'relay-runtime'
-
-const mutation = graphql`
-    mutation CreateProposalMutation($input: CreateProposalInput!) {
-        AddProposal(input: $input) {
-            newProposalEdge {
-                cursor
-                node {
-                    id
-                    proposalText
-                    proposalSlug
-                    createdAt
-                    author {
-                        id
-                        username
-                    }
-                }
-            }
-        }
-    }
-`
+import { createProposal } from '../../mutations/CreateProposal'
 
 class CreateProposal extends Component {
   state = {
@@ -40,29 +18,8 @@ class CreateProposal extends Component {
   handleSubmit = () => {
     this.setState({ open: false });
     const { proposal } = this.state
-    const variables = {
-      input: {
-        proposal
-      }
-    }
     this.setState({ proposal: '' })
-    commitMutation(
-      environment,
-      {
-        mutation,
-        variables,
-        updater: (store) => {
-          const payload = store.getRootField('AddProposal')
-          const newEdge = payload.getLinkedRecord('newProposalEdge')
-          const root = store.get(42)
-          const conn = ConnectionHandler.getConnection(
-            root,
-            'ProposalGrid_proposals'
-          )
-          ConnectionHandler.insertEdgeAfter(conn, newEdge)
-        }
-      }
-    )
+    createProposal({ proposal })
   };
 
   render() {
