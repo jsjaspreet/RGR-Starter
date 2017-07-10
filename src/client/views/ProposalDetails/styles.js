@@ -9,6 +9,11 @@ export default {
     justifyContent: 'center',
     margin: 8
   },
+  createReaction: {
+    maxWidth: 609,
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
   proposalText: {
     fontSize: 28,
     letterSpacing: 0.3,
