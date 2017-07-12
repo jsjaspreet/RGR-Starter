@@ -9,7 +9,9 @@ var projectPaths = require('../projectPaths')
 var outputTarget = path.parse(projectPaths.clientBuild)
 
 const vendor_libs = [
-  'react', 'babel-polyfill', 'react-dom', 'react-router-dom'
+  'react', 'babel-polyfill', 'react-dom', 'react-router-dom',
+  'autobind-decorator', 'js-cookie', 'material-ui', 'react-fontawesome',
+  'react-stack-grid', 'moment'
 ]
 
 // Set up plugins that will be run in dev and prod environments
