@@ -7,7 +7,7 @@ import { mutationWithClientMutationId, offsetToCursor } from 'graphql-relay'
 import slug from 'slug'
 import { ProposalEdgeType } from '../types'
 import pgdb from '../../database/pgdb'
-import { userFromContext } from '../../util/auth'
+import { csrfCheckFromContext, userFromContext } from '../../util'
 
 const createProposalMutation = mutationWithClientMutationId({
   name: 'CreateProposal',
@@ -31,12 +31,13 @@ const createProposalMutation = mutationWithClientMutationId({
       }
     }
   },
-  mutateAndGetPayload: async ({ proposal, userId }, ctx) => {
-    const { pgPool } = ctx
+  mutateAndGetPayload: async ({ proposal, userId }, context) => {
+    csrfCheckFromContext(context)
+    const { pgPool } = context
     let id = userId
     let user
     if (!userId) {
-      user = await userFromContext(ctx)
+      user = await userFromContext(context)
       id = user.id
     } else {
       user = await pgdb(pgPool).getUserById({ id })

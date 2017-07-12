@@ -4,18 +4,31 @@ import Cookie from 'js-cookie'
 const source = new RecordSource();
 const store = new Store(source);
 
+let csrfToken = Cookie.get('_csrf')
+
+const headers = {
+  // Add authentication and other headers here
+  'content-type': 'application/json',
+  'pulse-app': Cookie.get('pulse-app'),
+  'csrf-token': csrfToken
+}
+
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
-function fetchQuery(
+function
+fetchQuery(
   operation,
   variables,) {
+  // If CSRF token not found, get it before sending request to server
+  if (!csrfToken) {
+    csrfToken = Cookie.get('_csrf')
+    headers['csrf-token'] = csrfToken
+  }
+
   return fetch('/graphql', {
     method: 'POST',
-    headers: {
-      // Add authentication and other headers here
-      'content-type': 'application/json',
-      'pulse-app': Cookie.get('pulse-app')
-    },
+    credentials: 'same-origin',
+    headers,
     body: JSON.stringify({
       query: operation.text, // GraphQL text from input
       variables,

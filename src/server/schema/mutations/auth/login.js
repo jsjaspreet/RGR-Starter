@@ -4,7 +4,7 @@ import {
 } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { UserType } from '../../types'
-import { authenticateUser } from '../../../util/index'
+import { authenticateUser, csrfCheckFromContext } from '../../../util'
 
 const loginMutation = mutationWithClientMutationId({
   name: 'Login',
@@ -16,7 +16,9 @@ const loginMutation = mutationWithClientMutationId({
     user: { type: UserType },
     token: { type: GraphQLString }
   },
-  mutateAndGetPayload: async ({ username, password }, { pgPool }) => {
+  mutateAndGetPayload: async ({ username, password }, context) => {
+    csrfCheckFromContext(context)
+    const { pgPool } = context
     const { user, token } = await authenticateUser({ username, password, pgPool })
     return { user, token }
   }

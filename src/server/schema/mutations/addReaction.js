@@ -7,7 +7,7 @@ import {
 import { mutationWithClientMutationId, fromGlobalId, offsetToCursor } from 'graphql-relay'
 import { ReactionEdgeType } from '../types'
 import pgdb from '../../database/pgdb'
-import { userFromContext } from '../../util/auth'
+import { csrfCheckFromContext, userFromContext } from '../../util'
 
 const createReactionMutation = mutationWithClientMutationId({
   name: 'CreateReaction',
@@ -37,12 +37,13 @@ const createReactionMutation = mutationWithClientMutationId({
       }
     }
   },
-  mutateAndGetPayload: async ({ approve, comment, userId, proposalId }, ctx) => {
-    const { pgPool } = ctx
+  mutateAndGetPayload: async ({ approve, comment, userId, proposalId }, context) => {
+    csrfCheckFromContext(context)
+    const { pgPool } = context
     let computedUserId = userId
     let user
     if (!userId) {
-      user = await userFromContext(ctx)
+      user = await userFromContext(context)
       computedUserId = user.id
     } else {
       user = await pgdb(pgPool).getUserById({ id: computedUserId })

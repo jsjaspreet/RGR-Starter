@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs'
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { UserType } from '../types'
 import pgdb from '../../database/pgdb'
+import { csrfCheckFromContext } from '../../util'
 
 const createUserMutation = mutationWithClientMutationId({
   name: 'CreateUser',
@@ -17,7 +18,9 @@ const createUserMutation = mutationWithClientMutationId({
   outputFields: {
     user: { type: UserType }
   },
-  mutateAndGetPayload: async ({ email, username, password }, { pgPool }) => {
+  mutateAndGetPayload: async ({ email, username, password }, context) => {
+    csrfCheckFromContext(context)
+    const { pgPool } = context
     // hash the password before saving
     const hash = await bcrypt.hash(password, 10)
     const user = pgdb(pgPool).addUser({

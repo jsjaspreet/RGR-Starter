@@ -7,6 +7,7 @@ import {
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { DecisionType } from '../types'
 import pgdb from '../../database/pgdb'
+import { csrfCheckFromContext } from '../../util'
 
 const createDecisionMutation = mutationWithClientMutationId({
   name: 'CreateDecision',
@@ -29,7 +30,9 @@ const createDecisionMutation = mutationWithClientMutationId({
       type: DecisionType
     }
   },
-  mutateAndGetPayload: ({ approve, decision, userId, proposalId }, { pgPool }) => {
+  mutateAndGetPayload: ({ approve, decision, userId, proposalId }, context) => {
+    csrfCheckFromContext(context)
+    const { pgPool } = context
     return { decision: pgdb(pgPool).addDecision({ approve, decision, userId, proposalId }) }
   }
 })
