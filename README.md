@@ -8,5 +8,5 @@ Up and Running:
 - make migrate (runs migrations to set up the schema in postgres)
 - npm run update-relay (runs a compiler step for relay modern)
 - npm run dev (starts up webpack dev server with HMR, give it a bit to be up and running)
-- http://localhost:8080
+- http://localhost:8080 two users, one "admin" another "test", pass for both is "pass"
 
