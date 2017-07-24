@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-app_network := ragstarter_app
+app_network := rgrstarter_app
 
 migration: ## Create a new migration for Postgres.
 	touch sql/migrations/V$(shell date +"%s")__$(file).sql
