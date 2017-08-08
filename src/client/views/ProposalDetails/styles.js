@@ -1,5 +1,5 @@
 export default {
-  reactionContainer: {
+  sectionContainer: {
     maxWidth: 609,
     marginLeft: 'auto',
     marginRight: 'auto',
