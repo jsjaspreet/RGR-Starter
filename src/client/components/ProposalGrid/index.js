@@ -13,7 +13,9 @@ class ProposalGrid extends Component {
         columnWidth={280}
         gutterWidth={20}
         gutterHeight={20}>
-        {root.proposals.edges.map(edge => <ProposalPreview proposal={edge.node} key={edge.node.id}/>)}
+        {root.proposals.edges
+             .filter(({ node }) => node.active)
+             .map(({ node }) => <ProposalPreview proposal={node} key={node.id}/>)}
       </StackGrid>
     )
   }
@@ -27,6 +29,7 @@ export default createFragmentContainer(
               edges {
                   node {
                       ...ProposalPreview_proposal
+                      active
                       id
                   }
               }
