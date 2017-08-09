@@ -19,6 +19,7 @@ class ProposalPreview extends Component {
         <CardActions>
           <Link to={`/proposal/${proposalSlug}`}>
             <RaisedButton primary label="Details"/>
+            <RaisedButton secondary style={{ marginLeft: 12 }} label="Archive"/>
           </Link>
         </CardActions>
       </Card>
