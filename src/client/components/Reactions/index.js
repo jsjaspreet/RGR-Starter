@@ -2,11 +2,15 @@ import React, { Component } from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 import StackGrid from 'react-stack-grid'
 import Reaction from '../Reaction'
+import styles from './styles'
 
 class Reactions extends Component {
   render() {
     const { proposal } = this.props
     const { reactions } = proposal
+    if (reactions.edges.length === 0) {
+      return <h1 style={styles.noReactionsText}>No Reactions !</h1>
+    }
     return (
       <StackGrid
         gutterWidth={8}

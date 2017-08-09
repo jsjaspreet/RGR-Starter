@@ -8,5 +8,5 @@ const baseStyle = {
 export default function({ approve }) {
   const borderColor = approve ? "green" : "red"
   const border = `1px solid ${borderColor}`
-  return { ...baseStyle, border }
+  return { ...baseStyle, border, color: borderColor}
 }
