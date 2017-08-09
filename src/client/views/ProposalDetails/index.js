@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CircularProgress from 'material-ui/CircularProgress'
 import { createRefetchContainer, graphql } from 'react-relay'
 import Reactions from '../../components/Reactions'
+import Decision from '../../components/Decision'
 import CreateReaction from '../../components/CreateReaction'
 import ProposalOwner from '../../components/ProposalOwner'
 import styles from './styles'
@@ -16,7 +17,7 @@ class ProposalDetails extends Component {
     if (!proposal) {
       return <CircularProgress/>
     }
-    const { proposalText } = proposal
+    const { proposalText, decision } = proposal
     return (
       <div>
         <div style={styles.proposalContainer}>
@@ -28,11 +29,16 @@ class ProposalDetails extends Component {
         <div style={styles.sectionContainer}>
           <Reactions proposal={proposal}/>
         </div>
+        <div style={styles.sectionContainer}>
+          <Decision decision={decision}/>
+        </div>
+        {!decision &&
         <ProposalOwner proposal={proposal} viewer={viewer}>
           <div style={styles.sectionContainer}>
             you own this proposal!
           </div>
         </ProposalOwner>
+        }
       </div>
     )
   }
@@ -49,6 +55,9 @@ export default createRefetchContainer(
             proposal(slug: $slug) {
                 id
                 proposalText
+                decision {
+                    ...Decision_decision
+                }
                 ...Reactions_proposal
                 ...CreateReaction_proposal
                 ...ProposalOwner_proposal

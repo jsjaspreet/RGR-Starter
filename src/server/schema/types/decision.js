@@ -2,6 +2,7 @@ import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLString,
+  GraphQLBoolean,
   GraphQLID
 } from 'graphql'
 import { nodeInterface } from '../definitions'
@@ -33,7 +34,7 @@ const Decision = new GraphQLObjectType({
       type: GraphQLString,
     },
     approve: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: new GraphQLNonNull(GraphQLBoolean),
     }
   }),
   interfaces: () => [nodeInterface]
