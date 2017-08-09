@@ -4,10 +4,10 @@ import {
   GraphQLID,
   GraphQLNonNull
 } from 'graphql'
-import { mutationWithClientMutationId } from 'graphql-relay'
+import { mutationWithClientMutationId, fromGlobalId } from 'graphql-relay'
 import { DecisionType } from '../types'
 import pgdb from '../../database/pgdb'
-import { csrfCheckFromContext } from '../../util'
+import { csrfCheckFromContext, userFromContext } from '../../util'
 
 const createDecisionMutation = mutationWithClientMutationId({
   name: 'CreateDecision',
@@ -16,10 +16,10 @@ const createDecisionMutation = mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLBoolean)
     },
     decision: {
-      type: GraphQLString
+      type: new GraphQLNonNull(GraphQLString)
     },
     userId: {
-      type: new GraphQLNonNull(GraphQLID)
+      type: GraphQLID
     },
     proposalId: {
       type: new GraphQLNonNull(GraphQLID)
@@ -30,10 +30,16 @@ const createDecisionMutation = mutationWithClientMutationId({
       type: DecisionType
     }
   },
-  mutateAndGetPayload: ({ approve, decision, userId, proposalId }, context) => {
+  mutateAndGetPayload: async ({ approve, decision, userId, proposalId }, context) => {
     csrfCheckFromContext(context)
+    let id = userId
+    if (!userId) {
+      const user = await userFromContext(context)
+      id = user.id
+    }
     const { pgPool } = context
-    return { decision: pgdb(pgPool).addDecision({ approve, decision, userId, proposalId }) }
+    const { id: computedProposalId } = fromGlobalId(proposalId)
+    return { decision: pgdb(pgPool).addDecision({ approve, decision, userId: id, proposalId: computedProposalId }) }
   }
 })
 

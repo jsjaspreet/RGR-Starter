@@ -4,6 +4,7 @@ import { createRefetchContainer, graphql } from 'react-relay'
 import Reactions from '../../components/Reactions'
 import Decision from '../../components/Decision'
 import CreateReaction from '../../components/CreateReaction'
+import CreateDecision from '../../components/CreateDecision'
 import ProposalOwner from '../../components/ProposalOwner'
 import styles from './styles'
 
@@ -35,7 +36,7 @@ class ProposalDetails extends Component {
         {!decision &&
         <ProposalOwner proposal={proposal} viewer={viewer}>
           <div style={styles.sectionContainer}>
-            you own this proposal!
+            <CreateDecision proposal={proposal}/>
           </div>
         </ProposalOwner>
         }
@@ -60,6 +61,7 @@ export default createRefetchContainer(
                 }
                 ...Reactions_proposal
                 ...CreateReaction_proposal
+                ...CreateDecision_proposal
                 ...ProposalOwner_proposal
             }
             viewer {
